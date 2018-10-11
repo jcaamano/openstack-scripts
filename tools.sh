@@ -21,3 +21,15 @@ function route_to_subnetpool {
 
     sudo ip route replace "${SUBNET_POOL}" via "${NET_GATEWAY}"
 }
+
+function setup_external_interface {
+    local GATEWAY_IP=$(openstack subnet show public-subnet -c gateway_ip -f value)
+    local EXTERNAL_IF=$(ip route get ${GATEWAY_IP} | head -n1 | awk '{print $3}')
+    [ "${EXTERNAL_IF}" = "br-ex" ] && return
+    local EXTERNAL_IP=$(sudo ip -br add show ${EXTERNAL_IF} | awk '{print $3}')
+    sudo ip addr del ${EXTERNAL_IP} dev ${EXTERNAL_IF}
+    sudo ip addr add ${EXTERNAL_IP} dev br-ex
+    sudo ovs-vsctl add-port br-ex ${EXTERNAL_IF}
+    sudo ip link set br-ex up
+}
+
