@@ -45,9 +45,8 @@ openstack server add floating ip source_vm ${SOURCE_FLOATING}
 DEST_FLOATING=$(openstack floating ip create "${PUB_NETWORK}" -f value -c floating_ip_address)
 openstack server add floating ip dest_vm ${DEST_FLOATING}
 for i in 1 2 3; do
-    floating_ip=$(openstack floating ip create "${PUB_NETWORK}" -f value -c floating_ip_address)
+    floating_ip=$(openstack floating ip create --port p${i}in "${PUB_NETWORK}" -f value -c floating_ip_address)
     declare VM${i}_FLOATING=${floating_ip}
-    openstack server add floating ip vm${i} ${floating_ip}
 done
 
 # HTTP Flow classifier (catch the web traffic from source_vm to dest_vm)
