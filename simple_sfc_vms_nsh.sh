@@ -81,7 +81,7 @@ openstack sfc port pair create --ingress=p3in --egress=p3out PP3
 # And the port pair groups
 openstack sfc port pair group create --port-pair PP1 PG1
 openstack sfc port pair group create --port-pair PP2 PG2
-openstack sfc port pair group create --port-pair PP3 PG2
+openstack sfc port pair group create --port-pair PP3 PG3
 
 # The complete chain
 openstack sfc port chain create --port-pair-group PG1 --port-pair-group PG2 --flow-classifier FC_udp --flow-classifier FC_http PC1
