@@ -6,8 +6,6 @@
 . $(dirname "${BASH_SOURCE}")/custom.sh
 . $(dirname "${BASH_SOURCE}")/tools.sh
 
-setup_external_interface
-
 # Disable port security (else packets would be rejected when exiting the service VMs)
 openstack network set --disable-port-security "${PRIV_NETWORK}"
 
