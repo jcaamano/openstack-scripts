@@ -79,7 +79,8 @@ openstack sfc port pair create --ingress=p2in --egress=p2out PP2
 openstack sfc port pair create --ingress=p3in --egress=p3out PP3
 
 # And the port pair groups
-openstack sfc port pair group create --port-pair PP1 --port-pair PP2 PG1
+openstack sfc port pair group create --port-pair PP1 PG1
+openstack sfc port pair group create --port-pair PP2 PG2
 openstack sfc port pair group create --port-pair PP3 PG2
 
 # The complete chain
@@ -96,7 +97,7 @@ curl --silent "${VT_URL}" --output vxlan_tool.py
 for i in 1 2 3
 do
     ip_name=VM${i}_FLOATING
-    scp vxlan_tool.py cirros@${!ip_name} /tmp/
+    scp vxlan_tool.py cirros@${!ip_name}:/tmp/
     ssh -T cirros@${!ip_name} <<EOF
 sudo sh -c 'echo "auto eth1" >> /etc/network/interfaces'
 sudo sh -c 'echo "iface eth1 inet dhcp" >> /etc/network/interfaces'
