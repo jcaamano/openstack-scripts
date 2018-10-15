@@ -15,16 +15,18 @@ do
     openstack port create --network "${PRIV_NETWORK}" "${port}"
 done
 
+SF_IMAGE="ubuntu"
+
 # SFC VMs
-openstack server create --image "${IMAGE}" --flavor "${FLAVOR}" \
+openstack server create --image "${SF_IMAGE}" --flavor "${FLAVOR}" \
     --nic port-id="$(openstack port show -f value -c id p1in)" \
     --nic port-id="$(openstack port show -f value -c id p1out)" \
     --key-name "${SSH_KEYNAME}" vm1
-openstack server create --image "${IMAGE}" --flavor "${FLAVOR}" \
+openstack server create --image "${SF_IMAGE}" --flavor "${FLAVOR}" \
     --nic port-id="$(openstack port show -f value -c id p2in)" \
     --nic port-id="$(openstack port show -f value -c id p2out)" \
     --key-name "${SSH_KEYNAME}" vm2
-openstack server create --image "${IMAGE}" --flavor "${FLAVOR}" \
+openstack server create --image "${SF_IMAGE}" --flavor "${FLAVOR}" \
     --nic port-id="$(openstack port show -f value -c id p3in)" \
     --nic port-id="$(openstack port show -f value -c id p3out)" \
     --key-name "${SSH_KEYNAME}" vm3
