@@ -14,6 +14,9 @@ SSH_KEYNAME="default"
 PRIV_NETWORK="private"
 PUB_NETWORK="public"
 
+# avoid strict host checking
+echo "StrictHostKeyChecking no" >> ~/.ssh/config
+
 # Source credentials (devstack, packstack, tripleo)
 PROJECT="demo" # tripleo uses admin project
 if [[ -e ~/devstack/openrc ]]; then
