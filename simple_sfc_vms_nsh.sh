@@ -94,12 +94,9 @@ curl --silent "${VT_URL}" --output vxlan_tool.py
 for i in 1 2 3
 do
     ip_name=VM${i}_FLOATING
-    scp vxlan_tool.py cirros@${!ip_name}:/tmp/
-    ssh -T cirros@${!ip_name} <<EOF
-sudo sh -c 'echo "auto eth1" >> /etc/network/interfaces'
-sudo sh -c 'echo "iface eth1 inet dhcp" >> /etc/network/interfaces'
-sudo /etc/init.d/S40network restart
-sudo python /tmp/vxlan_tool.py --do forward --interface eth0 --output eth1 --verbose off &
+    sshpass -p opnfv ssh -T root@${!ip_name} <<EOF
+python /root/vxlan_tool.py --do forward --interface eth0 --output eth1 --verbose off &
+python /root/vxlan_tool.py --do forward --interface eth1 --output eth0 --verbose off &
 
 EOF
 done
