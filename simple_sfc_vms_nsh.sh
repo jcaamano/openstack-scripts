@@ -81,14 +81,10 @@ openstack sfc port pair group create --port-pair PP2 PG2
 openstack sfc port pair group create --port-pair PP3 PG3
 
 # The complete chain
-openstack sfc port chain create --port-pair-group PG1 --port-pair-group PG2 --flow-classifier FC_udp --flow-classifier FC_http PC1
+openstack sfc port chain create --port-pair-group PG1 --port-pair-group PG2 --port-pair-group PG3 --flow-classifier FC_udp --flow-classifier FC_http PC1
 
 # Start a basic demo web server
 ssh cirros@${DEST_FLOATING} 'while true; do echo -e "HTTP/1.0 200 OK\r\n\r\nWelcome to $(hostname)" | sudo nc -l -p 80 ; done&'
-
-# Get vxlan_tool from ODL SFC project
-VT_URL="https://raw.githubusercontent.com/opendaylight/sfc/master/sfc-test/nsh-tools/vxlan_tool.py"
-curl --silent "${VT_URL}" --output vxlan_tool.py
 
 # On service VMs, enable eth1 interface and start vxlan tool
 for i in 1 2 3
