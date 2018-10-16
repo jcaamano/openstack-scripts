@@ -10,4 +10,5 @@ else
 fi
 
 curl -o /tmp/ubuntu.img "http://cloud-images.ubuntu.com/xenial/current/xenial-server-cloudimg-amd64-uefi1.img"
-openstack image create "ubuntu" --file /tmp/ubuntu.img --disk-format qcow2 --container-format bare --public
+curl -o /tmp/sfc_nsh_fraser.qcow2 "http://artifacts.opnfv.org/sfc/images/sfc_nsh_fraser.qcow2"
+openstack image create "sfc_nsh" --file /tmp/sfc_nsh_fraser.qcow2 --disk-format qcow2 --container-format bare --public

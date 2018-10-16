@@ -15,7 +15,7 @@ do
     openstack port create --network "${PRIV_NETWORK}" "${port}"
 done
 
-SF_IMAGE="ubuntu"
+SF_IMAGE="sfc_nsh"
 
 # SFC VMs
 openstack server create --image "${SF_IMAGE}" --flavor "${FLAVOR}" \
@@ -69,9 +69,6 @@ openstack sfc flow classifier create \
     --protocol udp \
     --logical-source-port source_vm_port \
     FC_udp
-
-# Get easy access to the VMs (single node)
-route_to_subnetpool
 
 # Create the port pairs for all 3 VMs
 openstack sfc port pair create --ingress=p1in --egress=p1out PP1
