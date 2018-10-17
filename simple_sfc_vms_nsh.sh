@@ -86,13 +86,11 @@ openstack sfc port chain create --port-pair-group PG1 --port-pair-group PG2 --po
 # Start a basic demo web server
 ssh cirros@${DEST_FLOATING} 'while true; do echo -e "HTTP/1.0 200 OK\r\n\r\nWelcome to $(hostname)" | sudo nc -l -p 80 ; done&'
 
-# On service VMs, enable eth1 interface and start vxlan tool
+# On service VMs, start vxlan tool
 for i in 1 2 3
 do
     ip_name=VM${i}_FLOATING
-    sshpass -p opnfv ssh -T root@${!ip_name} <<EOF
-python /root/vxlan_tool.py --do forward --interface eth0 --output eth1 --verbose off &
-python /root/vxlan_tool.py --do forward --interface eth1 --output eth0 --verbose off &
-
-EOF
+    sshpass -p opnfv ssh-copy-id root@${!ip_name}
+    ssh -T root@${!ip_name} python /root/vxlan_tool.py --do forward --interface eth0 --output eth1 &> eth0_in.log &
+    ssh -T root@${!ip_name} python /root/vxlan_tool.py --do forward --interface eth1 --output eth0 &> eth1_in.log &
 done
