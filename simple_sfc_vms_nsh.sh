@@ -15,7 +15,8 @@ do
     openstack port create --network "${PRIV_NETWORK}" "${port}"
 done
 
-SF_IMAGE="sfc_nsh"
+# Download SF image
+nsh_sf_image_setup
 
 # SFC VMs
 openstack server create --image "${SF_IMAGE}" --flavor "${FLAVOR}" \
